@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SearchTravelRequest;
+use App\Http\Requests\GetSeatsRequest;
 use App\Services\QueroPassagemService;
-use Illuminate\Http\Request;
 use Exception;
 
 class TravelController extends Controller
 {
-    public function search(Request $request, QueroPassagemService $service)
+    public function search(SearchTravelRequest $request, QueroPassagemService $service)
     {
-        $request->validate([
-            'from' => 'required|string',
-            'to' => 'required|string',
-            'travelDate' => 'required|date_format:Y-m-d',
-        ]);
-
         try {
             $travels = $service->searchTravels(
                 $request->input('from'),
@@ -37,12 +32,8 @@ class TravelController extends Controller
         }
     }
 
-    public function seats(Request $request, QueroPassagemService $service)
+    public function seats(GetSeatsRequest $request, QueroPassagemService $service)
     {
-        $request->validate([
-            'travelId' => 'required|string',
-        ]);
-
         try {
             $seats = $service->getSeats($request->input('travelId'));
 

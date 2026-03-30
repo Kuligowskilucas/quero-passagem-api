@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Exceptions\QueroPassagemException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
-use Exception;
 
 class QueroPassagemService
 {
@@ -36,7 +36,7 @@ class QueroPassagemService
             $response = $this->client()->get('/stops');
 
             if ($response->failed()) {
-                throw new Exception('Falha ao buscar paradas na API.');
+                throw QueroPassagemException::failedToFetchStops();
             }
 
             $stops = $response->json();
@@ -64,7 +64,7 @@ class QueroPassagemService
         ]);
 
         if ($response->failed()) {
-            throw new Exception('Falha ao buscar viagens na API.');
+            throw QueroPassagemException::failedToSearchTravels();
         }
 
         return $response->json();
@@ -79,7 +79,7 @@ class QueroPassagemService
         ]);
 
         if ($response->failed()) {
-            throw new Exception('Falha ao buscar poltronas na API.');
+            throw QueroPassagemException::failedToFetchSeats();
         }
 
         return $response->json();

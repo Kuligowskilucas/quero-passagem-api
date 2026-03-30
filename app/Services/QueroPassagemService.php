@@ -30,6 +30,19 @@ class QueroPassagemService
             ->timeout(30);
     }
 
+    public function getAllStops(): array
+{
+    return Cache::remember('all_stops', 3600, function () {
+        $response = $this->client()->get('/stops');
+
+        if ($response->failed()) {
+            throw QueroPassagemException::failedToFetchStops();
+        }
+
+        return $response->json();
+    });
+}
+
     public function getStops(): array
     {
         return Cache::remember('stops_sp_pr', 3600, function () {

@@ -10,7 +10,7 @@ class StopController extends Controller
     public function index(QueroPassagemService $service)
     {
         try {
-            $stops = $service->getStops();
+            $stops = $service->getAllStops();
             return response()->json($stops);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()], 503);

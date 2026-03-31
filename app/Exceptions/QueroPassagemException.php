@@ -20,4 +20,8 @@ class QueroPassagemException extends Exception
     {
         return new self('Falha ao buscar poltronas na API.', 503);
     }
+        public static function failedToFetchCompany(): self
+    {
+        return new self('Falha ao buscar dados da empresa.', 503);
+    }
 }

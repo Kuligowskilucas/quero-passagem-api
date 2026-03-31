@@ -97,4 +97,17 @@ class QueroPassagemService
 
         return $response->json();
     }
+
+    public function getCompany(int $id): array
+    {
+        return Cache::remember("company_{$id}", 3600, function () use ($id) {
+            $response = $this->client()->get("/companies/{$id}");
+    
+            if ($response->failed()) {
+                throw QueroPassagemException::failedToFetchStops();
+            }
+    
+            return $response->json();
+        });
+    }
 }

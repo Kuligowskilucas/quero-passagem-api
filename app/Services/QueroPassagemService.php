@@ -31,17 +31,17 @@ class QueroPassagemService
     }
 
     public function getAllStops(): array
-{
-    return Cache::remember('all_stops', 3600, function () {
-        $response = $this->client()->get('/stops');
-
-        if ($response->failed()) {
-            throw QueroPassagemException::failedToFetchStops();
-        }
-
-        return $response->json();
-    });
-}
+    {
+        return Cache::remember('all_stops', 3600, function () {
+            $response = $this->client()->get('/stops');
+    
+            if ($response->failed()) {
+                throw QueroPassagemException::failedToFetchStops();
+            }
+    
+            return $response->json();
+        });
+    }
 
     public function getStops(): array
     {
